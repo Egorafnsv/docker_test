@@ -14,7 +14,7 @@ pipeline {
         }
         stage("clone rep") {
             steps{
-                sh 'git clone https://github.com/Egorafnsv/test_ex.git'
+                sh 'git clone https://github.com/Egorafnsv/docker_test.git'
 
             }
         }
