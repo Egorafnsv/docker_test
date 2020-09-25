@@ -21,7 +21,7 @@ pipeline {
         stage("docker build") {
             steps{
                 sh 'pwd'
-                sh 'docker build -t egorafnsv/testimage ./test_ex/docker'
+                sh 'docker build -t egorafnsv/testimage ./docker_test/docker'
             }
         }
         stage("docker push") {
@@ -33,11 +33,11 @@ pipeline {
             steps{
                 sh 'docker run --rm -d --name testcontainer --network host -p 5000:5000 egorafnsv/testimage'
             }
-      }
-    }
-    post {
-        failure {
-            sh 'docker stop testcontainer'
-            }   
+        post {
+            failure {
+                sh 'docker stop testcontainer'
+            }     
+        }
+        } 
     }
 }
