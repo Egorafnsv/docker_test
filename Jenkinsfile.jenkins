@@ -1,0 +1,43 @@
+pipeline {
+
+    agent{
+        label 'master'
+    }
+    options {
+        timestamps()
+    }
+    stages{
+        stage("clean"){
+            steps{
+                deleteDir()
+            }   
+        }
+        stage("clone rep") {
+            steps{
+                sh 'git clone https://github.com/Egorafnsv/test_ex.git'
+
+            }
+        }
+        stage("docker build") {
+            steps{
+                sh 'pwd'
+                sh 'docker build -t egorafnsv/testimage ./test_ex/docker'
+            }
+        }
+        stage("docker push") {
+            steps{
+                sh 'docker push docker.io/egorafnsv/testimage'
+            }
+        }
+        stage("docker run"){
+            steps{
+                sh 'docker run --rm -d --name testcontainer --network host -p 5000:5000 egorafnsv/testimage'
+            }
+      }
+    }
+    post {
+        failure {
+            sh 'docker stop testcontainer'
+            }   
+    }
+}
