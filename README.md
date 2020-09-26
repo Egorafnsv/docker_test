@@ -11,3 +11,4 @@
 4. В Script Path указать имя jenkinsfile: 
 > Jenkinsfile.jenkins
 5. Сохранить и собрать.
+- Имя testcontainer в Docker должно быть свободно, иначе Jenkins остановит контейнер с таким же именем.
